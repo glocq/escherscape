@@ -11,9 +11,9 @@ This is kind of an exercise in Haskell and creative coding:
 As of now, the program only generates regularly spaced small trees — so, not very interesting —, but the program can be easily modified to generate custom environments with a great deal of freedom (see section *Generating your own worlds* below), which I plan to do.
 
 On my list of things to do:
-* Shaders (right now there is no lighting/color variations)
 * Interesting world with advanced non-IO based randomness
 * Non-boring motion, use of the mouse
+* Less boring shaders (though I like the look of my basic one)
 * Collision
 
 Building
@@ -52,10 +52,16 @@ Generating your own worlds
 Central to this program is the `Chunks` module; this is what you need to edit should you want to define your own worlds. All you need is to make 3D models in e.g. Blender, and then define the three following symbols:
 * `ChunkCoordinates`: A type synonym for chunk identifiers (typically, tuples of integers). I think it needs to be a member of `Ord`.
 * `visibleChunks :: Vector3 -> Set ChunkCoordinates`: The set of chunks that a player at a given position can see.
-* `chunkAt :: ModelMap -> ChunkCoordinates -> Scene`: The chunk located at the given coordinates (needs to be translated accordingly!).
+* `chunkAt :: ModelMap -> ShaderMap -> ChunkCoordinates -> Scene`: The chunk located at the given coordinates (needs to be translated accordingly!).
 
 The argument of `chunkAt` of type `ModelMap` is a structure that allows you to access your 3D models. Here's how it works: say you've made a model of a tree in a 3D modeling program.
 1. Export your model in the .glb format under `assets/models/tree.glb`.
 2. The model automatically gets loaded in a `ModelMap` upon starting the program. The key of the `ModelMap` is just the model's file name with the `.glb` extension removed — here, `tree`.
 3. The `ModelMap` is given as argument to `chunkAt` for you to use when defining the function.
 4. Your tree model is then available in that `modelMap` as `modelMap ! "tree"`.
+
+Custom shaders work in a similar way. Say you want to use custom shaders `custom.vert` and/or `custom.frag`.
+1. Save your shader(s) under `assets/shaders/custom.vert` and/or `assets/shaders/custom.frag`. **The extensions need to be `.vert` and `.frag`, otherwise your shader will not be loaded!**
+2. The second argument of `chunkAt`, of type `ShaderMap`, now contains your shader(s). You can invoke them and assign them to some model `model` as follows: `model |* (shaderMap ! "custom")`
+
+Uniforms are not yet supported.
