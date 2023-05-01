@@ -105,7 +105,7 @@ renderLoop state modelMap chunks = do
   -- Prepare to draw
   RL.updateCamera camera RL.CameraModeCustom
   RL.beginDrawing
-  RL.clearBackground $ RL.Color 51 153 255 1
+  RL.clearBackground $ RL.Color 51 153 255 255
   RL.beginMode3D camera
   -- Get chunks to draw
   world <- STM.atomically $ STM.readTVar chunks
