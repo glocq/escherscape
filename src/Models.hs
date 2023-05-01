@@ -43,9 +43,9 @@ loadModelMap :: RL.WindowResources
 loadModelMap window modelDir = do
   ids <- listGLB modelDir
   foldM
-    (\modelMap id -> do
-        newModel <- loadGLB window modelDir id
-        return $ Map.insert id newModel modelMap)
+    (\modelMap ident -> do
+        newModel <- loadGLB window modelDir ident
+        return $ Map.insert ident newModel modelMap)
     Map.empty ids
 
 
@@ -62,9 +62,9 @@ loadGLB :: RL.WindowResources
         -> FilePath    -- ^ directory that contains our models
         -> String      -- ^ ID/basename of our model
         -> IO RL.Model
-loadGLB window modelDir id =
+loadGLB window modelDir ident =
   -- Swap axes X, Y and Z because .glb files are not oriented the right way
   -- This is done by applying a rotation around the (1, 1, 1) axis
   (RL._model'transform %~ (RL.matrixRotate (RL.Vector3 1 1 1) (2*pi/3) /*/)) <$>
   -- Load the model with given ID
-  RL.loadModel (modelDir </> id <.> "glb") window
+  RL.loadModel (modelDir </> ident <.> "glb") window
