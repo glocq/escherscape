@@ -40,20 +40,6 @@ main = do
   window <- initGraphics
   modelMap  <- loadModelMap  window "assets/models"
   shaderMap <- loadShaderMap window "assets/shaders"
-  -- let pointLightPosition = RL.Vector3 0 3 2
-  -- let pointLightColor = RL.Vector4 1 1 1 1
-  -- let pointLightStrength = 1.0
-  -- let specularStrength = 0.5
-  -- let ambientLightColor = RL.Vector4 1 1 0 1
-  -- let ambientStrength = 0.1
-  -- let pstn = RL.Vector3 0 0 1.8
-  -- RL.setShaderValue (shaderMap ! "lighting") "viewPos" (RL.ShaderUniformVec3 pstn) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "pointLightPosition" (RL.ShaderUniformVec3 pointLightPosition) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "pointLightColor" (RL.ShaderUniformVec4 pointLightColor) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "pointLightStrength" (RL.ShaderUniformFloat pointLightStrength) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "specularStrength" (RL.ShaderUniformFloat specularStrength) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "ambientLightColor" (RL.ShaderUniformVec4 ambientLightColor) window
-  -- RL.setShaderValue (shaderMap ! "lighting") "ambientStrength" (RL.ShaderUniformFloat ambientStrength) window
   gameState <- STM.newTVarIO GS.initialGameState
   chunks    <- STM.newTVarIO Map.empty
   -- Running
