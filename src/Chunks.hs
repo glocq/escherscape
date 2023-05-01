@@ -14,6 +14,8 @@ import qualified Raylib.Util.Lenses as RL
 -- Internal symbols
 import qualified Scene
 import qualified Models
+import qualified Shaders
+import Shaders ((|*))
 
 
 
@@ -38,8 +40,8 @@ visibleChunks pos = Set.fromList [(i, j) | i <- [floor $ x/chunkSide - chunkDist
         y = pos ^. RL._vector3'y
 
 
-chunkAt :: Models.ModelMap -> ChunkCoordinates -> Scene.Scene
-chunkAt modelMap (i, j) = Scene.Scene $ Vector.fromList
-  [ (modelMap ! "tree",   RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
-  , (modelMap ! "ground", RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
+chunkAt :: Models.ModelMap -> Shaders.ShaderMap -> ChunkCoordinates -> Scene.Scene
+chunkAt models shaders (i, j) = Scene.Scene $ Vector.fromList
+  [ ((models ! "tree"  ) |* (shaders ! "basic"), RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
+  , ((models ! "ground") |* (shaders ! "basic"), RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
   ]

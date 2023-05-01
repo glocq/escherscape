@@ -16,6 +16,7 @@ executable escherscape
     main-is:          Main.hs
     other-modules:    Chunks,
                       Models,
+                      Shaders,
                       Viewpoint,
                       Input,
                       GameState,
