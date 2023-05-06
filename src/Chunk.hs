@@ -16,7 +16,7 @@ import qualified Raylib.Util.Lenses as RL
 import qualified Scene
 import Model (InContext, model, shader, (|*))
 
-
+import Raylib.Util.Math ((/*/))
 
 
 -- | Length of a chunk
@@ -40,11 +40,11 @@ visibleChunks pos = Set.fromList [(i, j) | i <- [floor $ x/chunkSide - chunkDist
 
 
 chunkAt :: ChunkCoordinates -> InContext Scene.Scene
-chunkAt (i, j) = do
+chunkAt (i, j) = Scene.transformScene (RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0) <$> do
   basic <- shader "basic"
   tree   <- model "tree"
   ground <- model "ground"
   return . Scene.Scene . Vector.fromList $
-    [ (tree   |* basic, RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
-    , (ground |* basic, RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
+    [ (tree   |* basic, RL.matrixIdentity)
+    , (ground |* basic, RL.matrixIdentity)
     ]

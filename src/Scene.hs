@@ -2,7 +2,7 @@
 module Scene where
 
 -- General symbols
-import Control.Lens (Lens', (&), (^.), (<>~), (%~))
+import Control.Lens (Lens', mapped, _2, (&), (^.), (<>~), (%~))
 -- Containers
 import Data.HashMap.Strict (HashMap, (!))
 import Data.Vector (Vector, fromList)
@@ -27,6 +27,14 @@ instance Semigroup Scene where
 instance Monoid Scene where
   mempty :: Scene
   mempty = Scene mempty
+
+
+
+transformScene :: RL.Matrix -> Scene -> Scene
+transformScene matrix scene = scene & contents -- get vector of (model, transformation) pairs
+                                    . mapped   -- get to each item of the vector
+                                    . _2       -- get second item of the (model, transformation) pair
+                                    %~ (/*/ matrix) -- combine transform with already existing transforms
 
 
 demoScene :: HashMap String RL.Model -> Scene
