@@ -60,7 +60,11 @@ worldgenLoop state modelMap shaderMap chunks = forever $ do
       -- Add them
       foldl'
         -- How to add the chunks with given coordinates:
-        (\chks coords -> Map.insert coords (runReader (chunkAt coords) (modelMap, shaderMap)) chks)
+        (\chks coords -> Map.insert
+                           coords
+                           (runReader (chunkAt coords) (modelMap, shaderMap))
+                           chks
+        )
         -- What to add chunks to:
         severed
         -- Coordinates of the chunks to add:
