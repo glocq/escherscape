@@ -1,8 +1,9 @@
-module Chunks where
+module Chunk where
 
 -- General Haskell symbols
 import GHC.Float    (int2Float)
 import Control.Lens ((^.))
+import Control.Monad.Reader (Reader)
 -- Containers
 import Data.HashMap.Strict (HashMap, (!))
 import qualified Data.Vector as Vector
@@ -13,9 +14,7 @@ import qualified Raylib.Util.Math   as RL
 import qualified Raylib.Util.Lenses as RL
 -- Internal symbols
 import qualified Scene
-import qualified Models
-import qualified Shaders
-import Shaders ((|*))
+import Model (InContext, model, shader, (|*))
 
 
 
@@ -40,8 +39,12 @@ visibleChunks pos = Set.fromList [(i, j) | i <- [floor $ x/chunkSide - chunkDist
         y = pos ^. RL._vector3'y
 
 
-chunkAt :: Models.ModelMap -> Shaders.ShaderMap -> ChunkCoordinates -> Scene.Scene
-chunkAt models shaders (i, j) = Scene.Scene $ Vector.fromList
-  [ ((models ! "tree"  ) |* (shaders ! "basic"), RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
-  , ((models ! "ground") |* (shaders ! "basic"), RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
-  ]
+chunkAt :: ChunkCoordinates -> InContext Scene.Scene
+chunkAt (i, j) = do
+  basic <- shader "basic"
+  tree   <- model "tree"
+  ground <- model "ground"
+  return . Scene.Scene . Vector.fromList $
+    [ (tree   |* basic, RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
+    , (ground |* basic, RL.matrixTranslate (chunkSide * int2Float i) (chunkSide * int2Float j) 0)
+    ]
