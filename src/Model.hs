@@ -26,7 +26,7 @@ import Raylib.Util.Math (matrixRotate, (/*/))
 type InContext a = Reader (ModelMap, ShaderMap) a
 
 model :: String -> InContext RL.Model
-model id = reader $ \(modelMap, _) -> modelMap ! id
+model id = reader $ \(modelMap, shaderMap) -> (modelMap ! id) |* (shaderMap ! "basic")
 
 shader :: String -> InContext RL.Shader
 shader id = reader $ \(_, shaderMap) -> shaderMap ! id

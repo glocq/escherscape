@@ -5,13 +5,13 @@ A small game-ish program that procedurally generates a 3D environment around you
 
 This is kind of an exercise in Haskell and creative coding:
 * The whole world is specified in a declarative manner, by defining a few symbols in a single module. The idea is to allow the programmer to specify *what the world should be*, rather than tell the computer *how it should go about generating it*.
+* In particular, purity and laziness are taken advantage of for random generation.
 * This was an opportunity for me to get acquainted with Haskell lenses, concurrency with the STM monad, and the Raylib library.
-* I try to use idiomatic Haskell, whatever that means. I'm afraid the code may be a little cryptic at times, but it is fairly well documented.
+* I try to use combinators rather than explicit recursion whenever possible, to flex my Haskell muscles.
 
-As of now, the program only generates regularly spaced small trees — so, not very interesting —, but the program can be easily modified to generate custom environments with a great deal of freedom (see section *Generating your own worlds* below), which I plan to do.
+As of now, the program only generates regularly spaced trees of varying size — so, not very interesting —, but the program can be easily modified to generate custom environments with a great deal of freedom (see section *Generating your own worlds* below), which I plan to do.
 
 On my list of things to do:
-* Interesting world with advanced non-IO based randomness
 * Non-boring motion, use of the mouse
 * Less boring shaders (though I like the look of my basic one)
 * Collision
