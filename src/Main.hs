@@ -21,10 +21,11 @@ main = do
   shaderMap <- loadShaderMap window "assets/shaders"
   gameState <- newTVarIO initialGameState
   chunks    <- newTVarIO mempty
+  let seed = 0
   -- Running
   runConcurrently $
-    Concurrently (inputLoop    gameState                          ) <|>
-    Concurrently (worldgenLoop gameState modelMap shaderMap chunks) <|>
-    Concurrently (renderLoop   gameState modelMap chunks          )
+    Concurrently (inputLoop    gameState                               ) <|>
+    Concurrently (worldgenLoop gameState modelMap shaderMap chunks seed) <|>
+    Concurrently (renderLoop   gameState modelMap chunks               )
   -- Termination
   closeWindow window

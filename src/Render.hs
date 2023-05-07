@@ -38,8 +38,9 @@ worldgenLoop :: STM.TVar GS.GameState                         -- ^ Game logic-re
              -> ModelMap                                      -- ^ Contains our models loaded from files on disk
              -> ShaderMap                                     -- ^ Contains our shaders loaded from files on disk
              -> STM.TVar (Map.HashMap ChunkCoordinates Scene) -- ^ Chunks to display
+             -> Int                                           -- ^ Random seed
              -> IO ()
-worldgenLoop state modelMap shaderMap chunks = forever $ do
+worldgenLoop state modelMap shaderMap chunks seed = forever $ do
   -- Look up player position
   playerCoords <- view (GS.viewpoint . VP.position) <$> STM.atomically (STM.readTVar state)
   -- Compute set of visible coordinates
@@ -62,7 +63,7 @@ worldgenLoop state modelMap shaderMap chunks = forever $ do
         -- How to add the chunks with given coordinates:
         (\chks coords -> Map.insert
                            coords
-                           (runReader (chunkAt coords) (modelMap, shaderMap))
+                           (runReader (chunkAt coords seed) (modelMap, shaderMap))
                            chks
         )
         -- What to add chunks to:

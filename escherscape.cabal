@@ -21,7 +21,8 @@ executable escherscape
                       Input,
                       GameState,
                       Scene,
-                      Config
+                      Config,
+                      Random
     build-depends:    base                 ^>= 4.16.4,
                       directory            ^>= 1.3.6,
                       filepath             ^>= 1.4.2,
@@ -29,6 +30,9 @@ executable escherscape
                       containers           ^>= 0.6.5,
                       vector               ^>= 0.13.0,
                       mtl                  ^>= 2.2.2,
+                      random,
+                      MonadRandom,
+                      hashable,
                       monad-loops          ^>= 0.4.3,
                       lens                 ^>= 5.2.2,
                       async                ^>= 2.2.4,
