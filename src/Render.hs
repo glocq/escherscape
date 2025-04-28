@@ -28,7 +28,7 @@ import Scene (Scene, drawScene)
 
 initGraphics :: IO WindowResources
 initGraphics = do
-  window <- RL.initWindow 1600 900 "Bofill"
+  window <- RL.initWindow 1600 900 "Escherscape"
   RL.setTargetFPS 60
   return window
 
