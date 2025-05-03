@@ -19,7 +19,15 @@ On my list of things to do:
 Building
 ---------
 
-0. You need to have the `cabal` build tool installed (see https://www.haskell.org/cabal/).
+### Prerequisites
+
+* You need to have the Haskell toolchain installed. The standard way to do so is
+  with [GHCup](https://www.haskell.org/ghcup/).
+* If you are on Linux, you will also need to install X11 development packages;
+  see https://github.com/Anut-py/h-raylib?tab=readme-ov-file#linux
+
+### Building
+
 1. Clone this repository: (or alternatively, you can just download the .zip from Github's web interface)
 ```
 git clone https://github.com/glocq/escherscape
