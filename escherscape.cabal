@@ -29,7 +29,7 @@ executable escherscape
                       unordered-containers ^>= 0.2.19,
                       containers           ^>= 0.6.5,
                       vector               ^>= 0.13.0,
-                      mtl                  ^>= 2.2.2,
+                      mtl                   >= 2.2.2 && < 2.4,
                       random,
                       MonadRandom,
                       hashable,
